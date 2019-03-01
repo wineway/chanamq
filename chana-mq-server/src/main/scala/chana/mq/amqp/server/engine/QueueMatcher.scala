@@ -43,7 +43,7 @@ final class DirectMatcher extends QueueMatcher {
   }
 
   def lookup(topic: String): collection.Set[Subscriber] = {
-    topicToSubscriptions.get(topic).map(xs => xs.map(_.subscriber)).getOrElse(Set())
+    topicToSubscriptions.get(topic).map(xs => xs.map(_.subscriber)).getOrElse(Set[Subscriber]())
   }
 }
 

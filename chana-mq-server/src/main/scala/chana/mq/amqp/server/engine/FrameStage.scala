@@ -59,6 +59,7 @@ final class FrameStage()(implicit system: ActorSystem) extends GraphStage[FlowSh
   private val log = Logging(system, this.getClass)
 
   private val connection = {
+    //connection
     val conn = new AMQConnection()
     val connConfig = system.settings.config.getConfig("chana.mq.amqp.connection")
 
@@ -217,6 +218,7 @@ final class FrameStage()(implicit system: ActorSystem) extends GraphStage[FlowSh
                   val command = AMQCommand(connection.channel0, method)
 
                   push(out, command.render)
+                  println(command.render.decodeString("UTF-8"))
 
                   setHandler(in, new FrameInHandler)
                   setHandler(out, new FrameOutHandler)

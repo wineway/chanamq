@@ -125,6 +125,7 @@ final class ExchangeEntity() extends Actor with Stash with ActorLogging {
   private val subscriptions = new mutable.HashMap[String, mutable.ListBuffer[Subscription]]()
   private var queueMatcher: QueueMatcher = _
 
+  //???
   private val mediator = DistributedPubSub(context.system).mediator
   mediator ! Subscribe(ExchangeEntity.Topic, self)
 
@@ -299,6 +300,7 @@ final class ExchangeEntity() extends Actor with Stash with ActorLogging {
 
         val queues = queueSubs.map(_.queue)
 
+        //?
         val isPersistet = this.isDurable && isMsgPersist && queueSubs.map(_.isDurable).foldLeft(false)(_ || _)
         msgRefers :+= (MessageEntity.Refer(msgId.toString, queues.size, isPersistet), queues, mandatory, immediate)
 
@@ -365,7 +367,7 @@ final class ExchangeEntity() extends Actor with Stash with ActorLogging {
   }
 
   /**
-   * @return should kill self or not
+   * @return should kill self or not, por qué?
    */
   private def queueUnbind(queue: String, routingKey: String): Future[Boolean] = {
     val bindsToRemove = binds.filter { bind => bind.queue == queue && bind.routingKey == routingKey }

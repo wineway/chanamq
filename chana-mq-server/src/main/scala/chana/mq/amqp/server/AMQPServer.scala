@@ -50,9 +50,10 @@ object AMQPServer {
   MessageEntity.startSharding(system)
 
   def main(args: Array[String]) {
-
+    //get config
     val amqpServerConfig = system.settings.config.getConfig("chana.mq.amqp.server")
     val amqpEnable = amqpServerConfig.getBoolean("enable")
+    //host and port
     val amqpHost = amqpServerConfig.getString("interface")
     val amqpPort = amqpServerConfig.getInt("port")
 
@@ -71,6 +72,8 @@ object AMQPServer {
       val sslConfig = system.settings.config.getConfig("chana.mq.ssl")
 
       val password = sslConfig.getString("password").toCharArray
+//      val s = sslConfig.origin()
+//      println(s)
       val keystorePath = Paths.get(sslConfig.getString("keystore"))
       val keystore = Files.newInputStream(keystorePath)
 
